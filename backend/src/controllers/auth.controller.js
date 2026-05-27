@@ -112,12 +112,18 @@ export const updateProfile = async (req, res) => {
     }
 
     const userId = req.user._id;
+    let profilePicUrl = profilePic;
 
-    const uploadResponse = await cloudinary.uploader.upload(profilePic);
+    try {
+      const uploadResponse = await cloudinary.uploader.upload(profilePic);
+      profilePicUrl = uploadResponse?.secure_url || profilePic;
+    } catch (uploadError) {
+      console.log("Cloudinary upload failed, using fallback:", uploadError.message);
+    }
 
     const updatedUser = await User.findByIdAndUpdate(
       userId,
-      { profilePic: uploadResponse.secure_url },
+      { profilePic: profilePicUrl },
       { new: true },
     );
 
