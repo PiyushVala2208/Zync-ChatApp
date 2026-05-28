@@ -1,21 +1,30 @@
 function UsersLoadingSkeleton() {
+  const nameWidths = ["w-[45%]", "w-[25%]", "w-[35%]", "w-[30%]", "w-[40%]"];
+
   return (
-    <div className="space-y-2">
-      {[1, 2, 3].map((item) => (
+    <div className="space-y-3 w-full px-1">
+      {[...Array(5)].map((_, index) => (
         <div
-          key={item}
-          className="bg-slate-800/30 p-4 rounded-lg animate-pulse"
+          key={index}
+          className="bg-slate-800/40 border border-slate-700/30 p-4 rounded-xl animate-pulse flex items-center gap-4 w-full"
         >
-          <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 bg-slate-700 rounded-full"></div>
-            <div className="flex-1">
-              <div className="h-4 bg-slate-700 rounded w-3/4 mb-2"></div>
-              <div className="h-3 bg-slate-700/70 rounded w-1/2"></div>
-            </div>
+          <div className="relative flex-shrink-0">
+            <div className="w-12 h-12 bg-slate-700/80 rounded-full"></div>
+
+            <div className="absolute top-0 right-0 w-3 h-3 bg-slate-700/60 rounded-full ring-2 ring-slate-900" />
+          </div>
+
+          <div className="flex-1 min-w-0">
+            <div
+              className={`h-4 bg-slate-700/80 rounded ${
+                nameWidths[index % nameWidths.length]
+              }`}
+            />
           </div>
         </div>
       ))}
     </div>
   );
 }
+
 export default UsersLoadingSkeleton;
