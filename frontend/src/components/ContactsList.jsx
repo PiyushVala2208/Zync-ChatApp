@@ -4,8 +4,13 @@ import UsersLoadingSkeleton from "./UsersLoadingSkeleton";
 import { useAuthStore } from "../store/useAuthStore";
 
 function ContactList() {
-  const { getAllContacts, allContacts, setSelectedUser, isUsersLoading } =
-    useChatStore();
+  const {
+    getAllContacts,
+    allContacts,
+    setSelectedUser,
+    isUsersLoading,
+    selectedUser,
+  } = useChatStore();
   const { onlineUsers } = useAuthStore();
 
   useEffect(() => {
@@ -16,25 +21,49 @@ function ContactList() {
 
   return (
     <>
-      {allContacts.map((contact) => (
-        <div
-          key={contact._id}
-          className="bg-cyan-500/10 p-4 rounded-lg cursor-pointer hover:bg-cyan-500/20 transition-colors"
-          onClick={() => setSelectedUser(contact)}
-        >
-          <div className="flex items-center gap-3">
-            <div
-              className={`avatar ${onlineUsers.includes(contact._id) ? "online" : "offline"}`}
-            >
-              <div className="size-12 rounded-full">
-                <img src={contact.profilePic || "/avatar.png"} />
+      {allContacts.map((contact) => {
+        const isSelected = selectedUser?._id === contact._id;
+
+        return (
+          <div
+            key={contact._id}
+            onClick={() => setSelectedUser(contact)}
+            className={`p-4 rounded-lg cursor-pointer transition-colors w-full ${
+              isSelected
+                ? "bg-cyan-500/25 ring-1 ring-cyan-500/40"
+                : "bg-cyan-500/10 hover:bg-cyan-500/20"
+            }`}
+          >
+            <div className="flex items-center gap-3 min-w-0">
+              <div
+                className={`avatar flex-shrink-0 ${
+                  onlineUsers.includes(contact._id) ? "online" : "offline"
+                }`}
+              >
+                <div className="size-12 rounded-full">
+                  <img
+                    src={contact.profilePic || "/avatar.png"}
+                    alt={contact.fullName}
+                    className="object-cover size-full"
+                  />
+                </div>
+              </div>
+
+              <div className="min-w-0 flex-1">
+                <h4
+                  className={`font-medium truncate ${
+                    isSelected ? "text-cyan-400" : "text-slate-200"
+                  }`}
+                >
+                  {contact.fullName}
+                </h4>
               </div>
             </div>
-            <h4 className="text-slate-200 font-medium">{contact.fullName}</h4>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </>
   );
 }
+
 export default ContactList;
