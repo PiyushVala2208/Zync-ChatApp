@@ -107,23 +107,16 @@ export const logout = (_, res) => {
 export const updateProfile = async (req, res) => {
   try {
     const { profilePic } = req.body;
-    if (!profilePic) {
-      return res.status(400).json({ message: "Profile picture is required" });
-    }
+    if (!profilePic)
+      return res.status(400).json({ message: "Profile pic is required" });
 
     const userId = req.user._id;
-    let profilePicUrl = profilePic;
 
-    try {
-      const uploadResponse = await cloudinary.uploader.upload(profilePic);
-      profilePicUrl = uploadResponse?.secure_url || profilePic;
-    } catch (uploadError) {
-      console.log("Cloudinary upload failed, using fallback:", uploadError.message);
-    }
+    const uploadResponse = await cloudinary.uploader.upload(profilePic);
 
     const updatedUser = await User.findByIdAndUpdate(
       userId,
-      { profilePic: profilePicUrl },
+      { profilePic: uploadResponse.secure_url },
       { new: true },
     );
 

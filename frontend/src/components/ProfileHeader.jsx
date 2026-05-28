@@ -22,18 +22,8 @@ function ProfileHeader() {
 
     reader.onloadend = async () => {
       const base64Image = reader.result;
-      const previousImage = authUser?.profilePic || null;
       setSelectedImg(base64Image);
-      setIsUploading(true);
-
-      const result = await updateProfile({ profilePic: base64Image });
-      if (!result?.success) {
-        setSelectedImg(previousImage);
-      } else {
-        setSelectedImg(null);
-      }
-
-      setIsUploading(false);
+      await updateProfile({ profilePic: base64Image });
     };
   };
 
