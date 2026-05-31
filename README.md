@@ -1,5 +1,12 @@
 <h1 align="center">✨ Full-Stack Chat App with Auth & Emails ✨</h1>
 
+<p align="center">
+  🔗 <strong>Official Deployment:</strong> 
+  <a href="https://zync-chatapp-xx4m.onrender.com/" target="_blank">https://zync-chatapp-xx4m.onrender.com/</a>
+</p>
+
+---
+
 Highlights:
 
 - 🔐 Custom JWT Authentication (no 3rd-party auth)
@@ -14,7 +21,7 @@ Highlights:
 - 🎨 Beautiful UI with React, Tailwind CSS & DaisyUI
 - 🧠 Zustand for State Management
 - 🧑‍💻 Git & GitHub Workflow (branches, PRs, merges)
-- 🚀 Easy Deployment (free-tier friendly with Sevalla)
+- 🚀 Easy Deployment (free-tier friendly with Render)
 
 ---
 
